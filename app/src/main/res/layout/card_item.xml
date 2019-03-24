@@ -22,13 +22,11 @@
         <Button
             android:id="@+id/pause_resume"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="pause/resume" />
+            android:layout_width="wrap_content" />
         <Button
             android:layout_marginTop="100dp"
             android:id="@+id/start_stop"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="start/stop" />
+            android:layout_width="wrap_content" />
     </android.support.v7.widget.CardView>
 </LinearLayout>

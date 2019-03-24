@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDataset.add(new CustomTimer("another new value"));
+                myDataset.add(new CustomTimer());
                 mAdapter.notifyItemInserted(myDataset.size() - 1);
                 Snackbar.make(view, "New timer created", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

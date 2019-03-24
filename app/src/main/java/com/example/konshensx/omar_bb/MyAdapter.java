@@ -64,42 +64,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         holder.mTextView.setText(mDataset.get(position).getElapsedTime());
 
-        holder.startStopTimer.setText("Start");
-        holder.pauseResumeTimer.setText("Resume");
-
         // start / stop the timer
         holder.startStopTimer.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Timer timer = new Timer();
-                TimerTask timerTask = new TimerTask() {
-                    int seconds = 0;
-
-                    @Override
-                    public void run() {
-                        seconds++;
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (mDataset.get(position).isRunning()) {
-                                    holder.startStopTimer.setText("Stop");
-                                    holder.pauseResumeTimer.setText("Pause");
-
-                                    holder.mTextView.setText(mDataset.get(position).getElapsedTime());
-                                    Log.d("MY_ADAPTER", String.valueOf(mDataset.get(position).getId()));
-                                    Log.d("MY_ADAPTER", String.valueOf(position));
-                                } else {
-                                    holder.startStopTimer.setText("Start");
-                                    holder.pauseResumeTimer.setText("Resume");
-                                }
-                            }
-                        });
-                    }
-                };
-
-                timer.scheduleAtFixedRate(timerTask, 0, 1000);
-
                 CustomTimer myTimer = mDataset.get(position);
                 if (!myTimer.isRunning()) {
                     myTimer.startTimer();
@@ -108,7 +77,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     myTimer.stopTimer();
                     holder.startStopTimer.setText("Start");
                 }
-                notifyItemChanged(position);
+//                notifyItemChanged(position);
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mDataset.get(position).isRunning()) {
+//                                    Log.d("MY_ADAPTER", "RUNNING");
+                                    holder.mTextView.setText(mDataset.get(position).getElapsedTime());
+//                                    Log.d("MY_ADAPTER", String.valueOf(mDataset.get(position).isRunning()));
+
+                                }
+                            }
+                        });
+                    }
+                };
+
+                timer.scheduleAtFixedRate(timerTask, 0, 100);
+
                 Log.d(TAG, "button clicked ");
             }
         });
@@ -126,7 +116,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     myTimer.pauseTimer();
                     holder.pauseResumeTimer.setText("Resume");
                 }
-                notifyItemChanged(position);
+//                notifyItemChanged(position);
+
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mDataset.get(position).isRunning()) {
+                                    Log.d("MY_ADAPTER", "RUNNING");
+                                    holder.mTextView.setText(mDataset.get(position).getElapsedTime());
+//                                    Log.d("MY_ADAPTER", String.valueOf(mDataset.get(position).isRunning()));
+                                    Log.d("MY_ADAPTER", "FUCK " + String.valueOf(holder.pauseResumeTimer.getText()));
+                                }
+                            }
+                        });
+                    }
+                };
+
+                timer.scheduleAtFixedRate(timerTask, 0, 100);
                 Log.d(TAG, "button clicked ");
             }
         });

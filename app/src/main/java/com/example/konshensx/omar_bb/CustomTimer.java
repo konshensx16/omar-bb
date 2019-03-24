@@ -1,7 +1,5 @@
 package com.example.konshensx.omar_bb;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -22,11 +20,8 @@ public class CustomTimer {
     private TimerTask timerTask;
 
 
-    private String text;
-
     // FIXME: this is the constructor
-    CustomTimer(String text) {
-        this.text = text;
+    CustomTimer() {
         this.isRunning = false;
         this.id = MainActivity.id++;
     }
@@ -40,7 +35,6 @@ public class CustomTimer {
             @Override
             public void run() {
                 CustomTimer.this.secondsPassed += 1000;
-                Log.d("TIMER", "ID: " + id + getElapsedTime());
             }
         };
         this.timer.scheduleAtFixedRate(timerTask, 0, 1000);
@@ -77,13 +71,6 @@ public class CustomTimer {
         this.isRunning = true;
     }
 
-    public String getText() {
-        return this.text;
-    }
-
-    public void setText() {
-        this.text = text;
-    }
 
     public long getSecondsPassed() {
         return this.secondsPassed;
@@ -94,6 +81,7 @@ public class CustomTimer {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(this.secondsPassed);
         String result = (formatter.format(date));
+        Log.d("TIMER", "ID: " + id + result);
         return result;
     }
 
