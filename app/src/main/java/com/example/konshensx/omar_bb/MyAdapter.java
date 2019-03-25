@@ -2,6 +2,7 @@ package com.example.konshensx.omar_bb;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,12 +31,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView mTextView;
         public Button startStopTimer;
         public Button pauseResumeTimer;
+        public TextView humanIdText;
 
         public ViewHolder(View v) {
             super(v);
             mTextView = v.findViewById(R.id.info_text);
             startStopTimer = v.findViewById(R.id.start_stop);
             pauseResumeTimer = v.findViewById(R.id.pause_resume);
+            humanIdText = v.findViewById(R.id.human_id);
         }
     }
 
@@ -63,6 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(mDataset.get(position).getElapsedTime());
+        holder.humanIdText.setText(Integer.toString(mDataset.get(position).getHumanId()));
 
         // start / stop the timer
         holder.startStopTimer.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +77,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 if (!myTimer.isRunning()) {
                     myTimer.startTimer();
                     holder.startStopTimer.setText("Stop");
+                    Drawable stopIcon = activity.getResources().getDrawable(R.drawable.baseline_stop_white_18pt_2x);
+                    holder.startStopTimer.setCompoundDrawablesWithIntrinsicBounds(stopIcon, null, null, null);
+
                 } else {
                     myTimer.stopTimer();
+                    Drawable stopIcon = activity.getResources().getDrawable(R.drawable.baseline_play_arrow_white_18pt_2x);
+                    holder.startStopTimer.setCompoundDrawablesWithIntrinsicBounds(stopIcon, null, null, null);
                     holder.startStopTimer.setText("Start");
+                    holder.mTextView.setText("00:00:00");
+
                 }
 //                notifyItemChanged(position);
                 Timer timer = new Timer();
@@ -90,7 +101,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 //                                    Log.d("MY_ADAPTER", "RUNNING");
                                     holder.mTextView.setText(mDataset.get(position).getElapsedTime());
 //                                    Log.d("MY_ADAPTER", String.valueOf(mDataset.get(position).isRunning()));
-
                                 }
                             }
                         });
@@ -98,8 +108,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 };
 
                 timer.scheduleAtFixedRate(timerTask, 0, 100);
-
-                Log.d(TAG, "button clicked ");
             }
         });
 
@@ -112,9 +120,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 if (!myTimer.isRunning()) {
                     myTimer.resumeTimer();
                     holder.pauseResumeTimer.setText("Pause");
+                    Drawable stopIcon = activity.getResources().getDrawable(R.drawable.baseline_pause_white_18pt_2x);
+                    holder.pauseResumeTimer.setCompoundDrawablesWithIntrinsicBounds(stopIcon, null, null, null);
                 } else {
                     myTimer.pauseTimer();
                     holder.pauseResumeTimer.setText("Resume");
+                    Drawable stopIcon = activity.getResources().getDrawable(R.drawable.baseline_play_arrow_white_18pt_2x);
+                    holder.pauseResumeTimer.setCompoundDrawablesWithIntrinsicBounds(stopIcon, null, null, null);
                 }
 //                notifyItemChanged(position);
 

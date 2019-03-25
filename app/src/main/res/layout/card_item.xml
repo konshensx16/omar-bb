@@ -1,32 +1,85 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="400dp"
-    android:layout_height="200dp"><!-- A CardView that contains a TextView -->
+    android:layout_width="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_height="150dp"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:clipToPadding="false"><!-- A CardView that contains a TextView -->
+
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        card_view:cardBackgroundColor="@color/colorPrimary"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardBackgroundColor="#000B2F"
+        card_view:cardCornerRadius="10dp"
+        android:elevation="30dp">
 
-        <TextView
-            android:textAlignment="center"
-            android:textSize="20pt"
-            android:id="@+id/info_text"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-        <!-- bunch of button will be here to control each timer? -->
-        <Button
-            android:id="@+id/pause_resume"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
-        <Button
-            android:layout_marginTop="100dp"
-            android:id="@+id/start_stop"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+            <TextView
+                android:id="@+id/info_text"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textAlignment="center"
+                android:textSize="20pt"
+                android:textColor="#ffffff"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/human_id"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/human_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="8dp"
+                android:text="1"
+                android:textColor="#001843"
+                android:textAlignment="center"
+                android:textSize="50pt"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/pause_resume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:background="#E90085"
+                android:drawableLeft="@drawable/baseline_play_arrow_white_18pt_2x"
+                android:paddingRight="5dp"
+                android:textColor="#ffffff"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/start_stop" />
+
+            <Button
+                android:id="@+id/start_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:drawableLeft="@drawable/baseline_play_arrow_white_18pt_2x"
+                android:background="#E90085"
+                android:textColor="#ffffff"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- bunch of buttons will be here to control each timer? -->
+
     </android.support.v7.widget.CardView>
 </LinearLayout>

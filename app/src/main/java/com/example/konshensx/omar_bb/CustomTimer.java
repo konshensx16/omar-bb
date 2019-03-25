@@ -27,7 +27,6 @@ public class CustomTimer {
     }
 
     public void startTimer() {
-        Log.d(TAG, "Timer started");
         this.startedAt = System.currentTimeMillis();
         this.timer = new Timer(true);
         // i need to recreate the timerTask
@@ -46,25 +45,21 @@ public class CustomTimer {
         this.timer.cancel();
         this.timer = null;
         this.secondsPassed = 0;
-        Log.d(TAG, "Timer stopped");
         this.isRunning = false;
     }
 
     public void pauseTimer() {
         this.timer.cancel();
-        Log.d(TAG, "Timer paused");
         this.isRunning = false;
     }
 
     public void resumeTimer() {
-        Log.d(TAG, "Timer resumed");
         this.timer = new Timer(true);
 
         this.timerTask = new TimerTask() {
             @Override
             public void run() {
                 secondsPassed += 1000;
-                Log.d("TIMER", "System " + getElapsedTime());
             }
         };
         this.timer.scheduleAtFixedRate(timerTask, 0, 1000);
@@ -81,7 +76,6 @@ public class CustomTimer {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date(this.secondsPassed);
         String result = (formatter.format(date));
-        Log.d("TIMER", "ID: " + id + result);
         return result;
     }
 
@@ -91,5 +85,10 @@ public class CustomTimer {
 
     public int getId() {
         return this.id;
+    }
+
+    public int getHumanId()
+    {
+        return this.id + 1;
     }
 }
