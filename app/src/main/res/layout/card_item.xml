@@ -2,22 +2,22 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
-    android:layout_height="150dp"
-    android:gravity="center"
-    android:layout_gravity="center"
-    android:clipToPadding="false"><!-- A CardView that contains a TextView -->
+    android:clipToPadding="false"
+    android:gravity="center"><!-- A CardView that contains a TextView -->
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:elevation="30dp"
         card_view:cardBackgroundColor="#000B2F"
-        card_view:cardCornerRadius="10dp"
-        android:elevation="30dp">
+        card_view:cardCornerRadius="10dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,27 +31,55 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:textAlignment="center"
-                android:textSize="20pt"
                 android:textColor="#ffffff"
+                android:textSize="20pt"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintEnd_toStartOf="@+id/human_id"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/extra_time"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:textAlignment="center"
+                android:textColor="#FF5722"
+                android:textSize="7pt"
+                card_view:layout_constraintBottom_toTopOf="@+id/pause_resume"
+                card_view:layout_constraintEnd_toStartOf="@+id/human_id"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/info_text" />
+
+            <TextView
                 android:id="@+id/human_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:text="1"
-                android:textColor="#001843"
                 android:textAlignment="center"
+                android:textColor="#001843"
                 android:textSize="50pt"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/target_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="4dp"
+                android:text="30"
+                android:textAlignment="center"
+                android:textColor="#0018aa"
+                android:textSize="10pt"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="@+id/human_id" />
 
             <Button
                 android:id="@+id/pause_resume"
@@ -63,6 +91,7 @@
                 android:drawableLeft="@drawable/baseline_play_arrow_white_18pt_2x"
                 android:paddingRight="5dp"
                 android:textColor="#ffffff"
+                android:text="Resume"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toEndOf="@+id/start_stop" />
 
@@ -72,9 +101,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
-                android:drawableLeft="@drawable/baseline_play_arrow_white_18pt_2x"
                 android:background="#E90085"
+                android:drawableLeft="@drawable/baseline_play_arrow_white_18pt_2x"
                 android:textColor="#ffffff"
+                android:text="Start"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent" />
         </android.support.constraint.ConstraintLayout>

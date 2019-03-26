@@ -2,7 +2,9 @@ package com.example.konshensx.omar_bb;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +34,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public Button startStopTimer;
         public Button pauseResumeTimer;
         public TextView humanIdText;
+        public TextView targetTime;
+        public TextView extraTime;
+        public CardView cardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -39,6 +44,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             startStopTimer = v.findViewById(R.id.start_stop);
             pauseResumeTimer = v.findViewById(R.id.pause_resume);
             humanIdText = v.findViewById(R.id.human_id);
+            targetTime = v.findViewById(R.id.target_time);
+            extraTime = v.findViewById(R.id.extra_time);
+            cardView = v.findViewById(R.id.card_view);
         }
     }
 
@@ -65,15 +73,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        final CustomTimer myTimer = mDataset.get(position);
         holder.mTextView.setText(mDataset.get(position).getElapsedTime());
-        holder.humanIdText.setText(Integer.toString(mDataset.get(position).getHumanId()));
+        holder.humanIdText.setText(Integer.toString(myTimer.getHumanId()));
+        holder.targetTime.setText(Integer.toString(myTimer.getHumanTargetTime()));
+        holder.extraTime.setText("+00:00:00");
 
         // start / stop the timer
         holder.startStopTimer.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                CustomTimer myTimer = mDataset.get(position);
                 if (!myTimer.isRunning()) {
                     myTimer.startTimer();
                     holder.startStopTimer.setText("Stop");
@@ -86,9 +96,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     holder.startStopTimer.setCompoundDrawablesWithIntrinsicBounds(stopIcon, null, null, null);
                     holder.startStopTimer.setText("Start");
                     holder.mTextView.setText("00:00:00");
-
                 }
-//                notifyItemChanged(position);
                 Timer timer = new Timer();
                 TimerTask timerTask = new TimerTask() {
 
@@ -97,10 +105,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (mDataset.get(position).isRunning()) {
-//                                    Log.d("MY_ADAPTER", "RUNNING");
-                                    holder.mTextView.setText(mDataset.get(position).getElapsedTime());
-//                                    Log.d("MY_ADAPTER", String.valueOf(mDataset.get(position).isRunning()));
+                                if (myTimer.isRunning()) {
+                                    holder.mTextView.setText(myTimer.getElapsedTime());
+                                    holder.extraTime.setText(myTimer.getExtraElapsedTime());
+                                    // NOTE: this should only work if the user sets a myTimer, and it's not just counting.
+                                    switch (myTimer.getTargetTime()) {
+                                        case HALF_HOUR:
+                                            // TODO: How am i gonna shut the sound ?
+                                            // NOTE: the sound shuts after it's completed it not looping (GOOD THING I THINK)
+                                            Log.d(TAG, String.valueOf(myTimer.getHumanSecondsPassed()));
+                                            Log.d(TAG, String.valueOf(myTimer.isPlaying()));
+
+                                            if (myTimer.getHumanSecondsPassed() >= CustomTimer.HALF_HOUR && !myTimer.isPlaying()) {
+                                                Log.d("MY_ADAPTER", "SHOULD PLAY SOUNDS");
+                                                holder.cardView.setCardBackgroundColor(activity.getResources().getColor(R.color.green));
+                                                myTimer.playSound();
+                                            }
+                                            break;
+                                        case ONE_HOUR:
+                                            if (myTimer.getHumanSecondsPassed() >= CustomTimer.ONE_HOUR && !myTimer.isPlaying()) {
+                                                holder.cardView.setCardBackgroundColor(activity.getResources().getColor(R.color.green));
+                                                myTimer.playSound();
+                                            }
+                                            break;
+
+                                        case ONE_AND_HALF:
+                                            if (myTimer.getHumanSecondsPassed() >= CustomTimer.ONE_AND_HALF && !myTimer.isPlaying()) {
+                                                holder.cardView.setCardBackgroundColor(activity.getResources().getColor(R.color.green));
+                                                myTimer.playSound();
+                                            }
+                                            break;
+                                    }
                                 }
                             }
                         });
@@ -116,7 +151,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
             @Override
             public void onClick(View view) {
-                CustomTimer myTimer = mDataset.get(position);
                 if (!myTimer.isRunning()) {
                     myTimer.resumeTimer();
                     holder.pauseResumeTimer.setText("Pause");
@@ -139,10 +173,33 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             @Override
                             public void run() {
                                 if (mDataset.get(position).isRunning()) {
-                                    Log.d("MY_ADAPTER", "RUNNING");
                                     holder.mTextView.setText(mDataset.get(position).getElapsedTime());
-//                                    Log.d("MY_ADAPTER", String.valueOf(mDataset.get(position).isRunning()));
-                                    Log.d("MY_ADAPTER", "FUCK " + String.valueOf(holder.pauseResumeTimer.getText()));
+                                    holder.extraTime.setText(myTimer.getExtraElapsedTime());
+                                }
+
+                                switch (myTimer.getTargetTime()) {
+                                    case HALF_HOUR:
+                                        // TODO: How am i gonna shut the sound ?
+                                        // NOTE: the sound shuts after it's completed it not looping (GOOD THING I THINK)
+                                        if (myTimer.getHumanSecondsPassed() >= CustomTimer.HALF_HOUR && !myTimer.isPlaying()) {
+                                            // also change the background color or the border color
+                                            holder.cardView.setCardBackgroundColor(activity.getResources().getColor(R.color.green));
+                                            myTimer.playSound();
+                                        }
+                                        break;
+                                    case ONE_HOUR:
+                                        if (myTimer.getHumanSecondsPassed() >= CustomTimer.ONE_HOUR && !myTimer.isPlaying()) {
+                                            holder.cardView.setCardBackgroundColor(activity.getResources().getColor(R.color.green));
+                                            myTimer.playSound();
+                                        }
+                                        break;
+
+                                    case ONE_AND_HALF:
+                                        if (myTimer.getHumanSecondsPassed() >= CustomTimer.ONE_AND_HALF && !myTimer.isPlaying()) {
+                                            holder.cardView.setCardBackgroundColor(activity.getResources().getColor(R.color.green));
+                                            myTimer.playSound();
+                                        }
+                                        break;
                                 }
                             }
                         });

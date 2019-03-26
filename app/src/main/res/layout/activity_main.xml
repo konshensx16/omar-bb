@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,11 +24,46 @@
     <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_half"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_min"
+        android:elevation="0dp"
+        app:fabSize="mini"
+        android:translationZ="0dp"
+        app:srcCompat="@drawable/half" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_min"
+        app:fabSize="mini"
+        android:elevation="0dp"
+        android:translationZ="0dp"
+        app:srcCompat="@drawable/one_hour" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_one_and_half"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_min"
+        app:fabSize="mini"
+        android:elevation="0dp"
+        android:translationZ="0dp"
+        app:srcCompat="@drawable/one_and_half" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:elevation="10dp"
+        android:translationZ="10dp"
         app:srcCompat="@drawable/baseline_alarm_add_white_36pt_2x" />
 
 </android.support.design.widget.CoordinatorLayout>
