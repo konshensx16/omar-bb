@@ -57,6 +57,17 @@
         app:srcCompat="@drawable/one_and_half" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/free"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_min"
+        app:fabSize="mini"
+        android:elevation="0dp"
+        android:translationZ="0dp"
+        app:srcCompat="@drawable/infinite" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
