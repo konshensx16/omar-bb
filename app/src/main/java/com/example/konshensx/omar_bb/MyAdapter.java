@@ -39,6 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView targetTime;
         public TextView extraTime;
         public CardView cardView;
+        public TextView finish_time;
 
         public ViewHolder(View v) {
             super(v);
@@ -49,6 +50,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             targetTime = v.findViewById(R.id.target_time);
             extraTime = v.findViewById(R.id.extra_time);
             cardView = v.findViewById(R.id.card_view);
+            finish_time = v.findViewById(R.id.finish_time);
+
         }
     }
 
@@ -80,6 +83,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.humanIdText.setText(Integer.toString(myTimer.getHumanId()));
         holder.targetTime.setText(Integer.toString(myTimer.getHumanTargetTime()));
         holder.extraTime.setText("+00:00:00");
+        Log.d(TAG, myTimer.getProjectedFinishTime());
+
+        holder.finish_time.setText(myTimer.getProjectedFinishTime());
 
         // start / stop the timer
         holder.startStopTimer.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +99,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     holder.startStopTimer.setCompoundDrawablesWithIntrinsicBounds(stopIcon, null, null, null);
 
                 } else {
+                    // TODO: reset the card color back to the initial state
                     myTimer.stopTimer();
+                    myTimer.stopSound();
+
                     Drawable stopIcon = activity.getResources().getDrawable(R.drawable.baseline_play_arrow_white_18pt_2x);
                     holder.startStopTimer.setCompoundDrawablesWithIntrinsicBounds(stopIcon, null, null, null);
                     holder.startStopTimer.setText("Start");
@@ -110,6 +119,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                                 if (myTimer.isRunning()) {
                                     holder.mTextView.setText(myTimer.getElapsedTime());
                                     holder.extraTime.setText(myTimer.getExtraElapsedTime());
+                                    holder.finish_time.setText(myTimer.getProjectedFinishTime());
+
                                     // NOTE: this should only work if the user sets a myTimer, and it's not just counting.
                                     switch (myTimer.getTargetTime()) {
                                         case HALF_HOUR:
@@ -174,9 +185,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (mDataset.get(position).isRunning()) {
-                                    holder.mTextView.setText(mDataset.get(position).getElapsedTime());
+                                if (myTimer.isRunning()) {
+                                    holder.mTextView.setText(myTimer.getElapsedTime());
                                     holder.extraTime.setText(myTimer.getExtraElapsedTime());
+                                    holder.finish_time.setText(myTimer.getProjectedFinishTime());
                                 }
 
                                 switch (myTimer.getTargetTime()) {

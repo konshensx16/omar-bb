@@ -41,6 +41,7 @@ public class CustomTimer {
 
     // FIXME: this is the constructor
     CustomTimer(Context context, Time time) {
+        this.startedAt = System.currentTimeMillis();
         this.isRunning = false;
         this.id = MainActivity.id++;
         this.time = time;
@@ -179,6 +180,30 @@ public class CustomTimer {
         Date date = new Date(extra);
         String result = (formatter.format(date));
         return "+" + result;
+    }
+
+
+    public String getProjectedFinishTime() {
+        // FIXME: change all the value to ge the projected finsih time
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+
+        long targetTimeInSeconds = 0;
+        switch (this.time) {
+            case HALF_HOUR:
+                targetTimeInSeconds = HALF_HOUR * 1000;
+                break;
+            case ONE_HOUR:
+                targetTimeInSeconds = ONE_HOUR * 1000;
+                break;
+            case ONE_AND_HALF:
+                targetTimeInSeconds = ONE_AND_HALF * 1000;
+                break;
+        }
+        long finishTime = targetTimeInSeconds + startedAt;
+        Date date = new Date(finishTime);
+        String result = (formatter.format(date));
+
+        return ">" + result;
     }
 
 }

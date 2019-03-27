@@ -79,10 +79,13 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             //Remove swiped item from list and notify the RecyclerView
                             // remove the card
-                            // FIXME: the timer needs to STOPPED before removing it
+                            // the timer needs to STOPPED before removing it
                             CustomTimer myTimer = myDataset.get(index);
-                            myTimer.stopTimer();
-                            myTimer.stopSound();
+                            if (myTimer.isRunning()) {
+                                // FIXME: this line is throwing an exception
+                                myTimer.stopTimer();
+                                myTimer.stopSound();
+                            }
                             myDataset.remove(index);  //then remove item
                             mAdapter.notifyItemRemoved(index);    //item removed from recylcerview
 
